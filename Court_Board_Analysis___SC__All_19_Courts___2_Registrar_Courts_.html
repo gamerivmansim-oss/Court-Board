@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Court Board Analysis — Supreme Court of India (SC)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.85); opacity: 0.9; }
+      75% { transform: scale(1.85); opacity: 0; }
+      100% { transform: scale(1.85); opacity: 0; }
+    }
+    .live-beacon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background-color: #10B981;
+      animation: pulseRing 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    }
+
+    @keyframes urgentPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35); }
+      50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    }
+    .urgent-card {
+      animation: urgentPulse 2s infinite;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#0F172A] font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- =====================================================================
+       1. STICKY HEADER, DATE STRIP, QUICK-JUMP BAR & CATEGORY TABS
+       ===================================================================== -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-2xs">
+    <div class="max-w-7xl mx-auto px-4 pt-3 pb-2.5">
+      <!-- Top Row: Brand & Live Sync Pill -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#0F172A] text-white flex items-center justify-center shadow-xs shrink-0">
+            <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900">Court Board Analysis</h1>
+              <span class="px-2 py-0.5 text-[11px] font-mono font-bold tracking-wide bg-[#0F172A] text-white rounded-md">
+                SC
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full tabular-nums">
+                <span class="relative flex h-2 w-2 live-beacon">
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span id="liveSyncTimestamp">Fetched till 25.11.2026, 12:01 PM IST</span>
+              </span>
+            </div>
+            <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-0.5">
+              Supreme Court of India • 19 Courts + 2 Registrar Courts
+            </p>
+          </div>
+        </div>
+
+        <!-- Header Action Buttons -->
+        <div class="flex items-center gap-2">
+          <button onclick="downloadStandaloneHTML()"
+            class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl border border-slate-200 transition"
+            title="Download single-file index.html for Netlify Drop / Vercel / GitHub Pages">
+            <svg class="w-3.5 h-3.5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span class="hidden sm:inline">Download index.html</span>
+          </button>
+
+          <button onclick="openTrackModal()"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#0F172A] hover:bg-slate-800 active:scale-[0.99] text-white text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition">
+            <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            <span>+ Track Matter</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Second Row: Date Strip + Search Input -->
+      <div class="mt-2.5 pt-2.5 border-t border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
+        <!-- Multi-Day Date Strip -->
+        <div id="dateStripContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative w-full lg:w-80">
+          <svg class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="boardSearchInput" oninput="handleSearchOrFilter()"
+            placeholder="Search court #, judge name, item #, or notice..."
+            class="w-full pl-8 pr-7 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-indigo-500 transition" />
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-bold">✕</button>
+        </div>
+      </div>
+
+      <!-- Third Row: Category Filter Tabs + Quick-Jump Court Pills (1-19, R1, R2) -->
+      <div class="mt-2 pt-2 border-t border-slate-100 flex flex-col xl:flex-row xl:items-center justify-between gap-2">
+        <!-- Category Tabs -->
+        <div id="categoryTabsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Quick-Jump Number Pills -->
+        <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-1 shrink-0">Jump:</span>
+          <div id="quickJumpPills" class="flex items-center gap-1">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         3. INTERACTIVE LIVE COURTROOM SIMULATOR BAR
+         ===================================================================== -->
+    <div class="bg-[#0F172A] text-slate-100 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 font-bold text-amber-300">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            Live Courtroom Simulator:
+          </span>
+
+          <select id="simCourtSelect" class="bg-slate-800 border border-slate-700 text-white rounded-lg px-2.5 py-1 text-xs font-semibold focus:outline-none focus:border-indigo-400">
+            <!-- Populated with all 21 courts -->
+          </select>
+
+          <button onclick="stepCourtItem(-1)" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold transition" title="Step back 1 item">
+            <span>-1</span>
+          </button>
+
+          <button onclick="stepCourtItem(1)" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-2xs transition">
+            <span>Next Item (+1)</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <!-- 1:00 PM Lunch Break Buffer Toggle -->
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none bg-slate-800/90 border border-slate-700 px-2.5 py-1 rounded-lg">
+            <input type="checkbox" id="lunchBufferCheckbox" onchange="toggleLunchBuffer(this.checked)" class="rounded border-slate-600 bg-slate-900 text-amber-500 focus:ring-0">
+            <span class="text-slate-200 font-medium">1:00 PM Lunch Break Buffer</span>
+          </label>
+
+          <!-- Auto-Tick Simulation Toggle -->
+          <button id="autoTickBtn" onclick="toggleAutoTick()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-600/30 border border-indigo-400/40 text-indigo-200 hover:bg-indigo-600/50 font-semibold transition">
+            <span id="autoTickDot" class="w-2 h-2 rounded-full bg-indigo-400"></span>
+            <span id="autoTickLabel">Auto-Tick Simulation: OFF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT WORKSPACE -->
+  <main class="max-w-7xl mx-auto px-4 pt-5 pb-12 space-y-6">
+
+    <!-- =====================================================================
+         2. PINNED STICKY "LIVE MATTER DISTANCE TICKER" PANEL
+         ===================================================================== -->
+    <section aria-label="Pinned Live Matter Distance Ticker" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-4 py-3 bg-gradient-to-r from-[#0F172A] via-slate-900 to-slate-800 text-white flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-sm font-bold tracking-tight">Live Matter Distance Ticker</h2>
+              <span id="pinnedBadgeCount" class="px-2 py-0.5 text-[11px] font-mono font-bold bg-white/10 text-emerald-300 rounded-full tabular-nums">
+                4 Tracked
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-300">
+              Real-time distance computed from custom bench sequences, <span class="text-white font-semibold">"Along With"</span> tags, fixed-time slots &amp; lunch recess
+            </p>
+          </div>
+        </div>
+
+        <button onclick="openTrackModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl border border-white/15 transition">
+          <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          <span>+ Track Matter</span>
+        </button>
+      </div>
+
+      <!-- Lunch Recess Banner (shown when toggled or in Lunch Recess mode) -->
+      <div id="lunchActiveNotice" class="hidden px-4 py-2 bg-amber-50 border-b border-amber-200 text-amber-950 text-xs flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 font-bold text-[10px] uppercase">1:00 PM – 2:00 PM Recess</span>
+          <span><strong>Lunch Break Buffer Active:</strong> Projected call clock times include a +60 min afternoon recess offset.</span>
+        </div>
+        <span class="font-mono font-bold text-amber-800">+60m Buffer</span>
+      </div>
+
+      <!-- Tracked Matters Cards Grid -->
+      <div id="pinnedTickerGrid" class="p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3.5 bg-slate-50/70">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         4 & 5. COMPLETE 21-COURT ROSTER (COURTS 1–19 + REGISTRAR COURTS 1 & 2)
+         ===================================================================== -->
+    <section aria-label="Supreme Court of India Daily Boards" class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h2 id="boardSectionTitle" class="text-base sm:text-lg font-extrabold text-slate-900">
+            Daily Cause List Boards • Wednesday, 25 Nov 2026
+          </h2>
+          <p id="boardSectionSubtitle" class="text-xs text-slate-500">
+            Showing all 21 boards (19 Regular Courts + 2 Registrar Courts). Click any item chip to pin/unpin it on the ticker.
+          </p>
+        </div>
+
+        <!-- Status Legend -->
+        <div class="flex flex-wrap items-center gap-3 text-[11px] font-medium text-slate-600 bg-white px-3 py-1.5 rounded-xl border border-slate-200">
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-slate-200 border border-slate-300"></span> Heard</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-500"></span> Running</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-amber-100 border border-amber-400"></span> Priority / Tagged</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-indigo-600"></span> Pinned</span>
+        </div>
+      </div>
+
+      <!-- Courtroom Cards Grid -->
+      <div id="courtroomCardsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       DEPLOY & HOSTING FOOTER WITH ONE-CLICK DOWNLOAD
+       ===================================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-6 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <p class="text-xs font-bold text-slate-900">
+          Deploy-Ready Single-File Web Application • Court Board Analysis (SC)
+        </p>
+        <p class="text-xs text-slate-500 max-w-2xl leading-relaxed">
+          To host this site online with a shareable <code class="px-1 py-0.5 bg-slate-100 rounded text-slate-700">https://</code> link, download <code class="px-1 py-0.5 bg-slate-100 rounded text-slate-700">index.html</code> using the button on the right and drag-and-drop it into <strong>Netlify Drop</strong>, <strong>Vercel</strong>, or <strong>GitHub Pages</strong>.
+        </p>
+      </div>
+      <button onclick="downloadStandaloneHTML()"
+        class="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0F172A] hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-xs shrink-0 transition">
+        <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Download index.html</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       "+ TRACK MATTER" MODAL (ALL 21 COURTS)
+       ===================================================================== -->
+  <div id="trackMatterModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl w-full max-w-md overflow-hidden">
+      <div class="px-5 py-4 bg-[#0F172A] text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          <h3 class="text-sm font-bold tracking-tight">Track Matter on Live Distance Ticker</h3>
+        </div>
+        <button onclick="closeTrackModal()" class="text-slate-400 hover:text-white p-1 rounded-lg transition">✕</button>
+      </div>
+
+      <form onsubmit="submitTrackMatter(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Select Courtroom (All 21 Courts)</label>
+          <select id="modalCourtSelect" onchange="updateModalCourtHint()" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <!-- Populated dynamically with all 21 courts -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Item Number</label>
+            <input type="number" id="modalItemInput" min="1" max="500" required placeholder="e.g. 18"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">List Category</label>
+            <select id="modalListType" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="Fresh / Misc">Fresh / Misc</option>
+              <option value="Mentioning">Mentioning</option>
+              <option value="Supplementary">Supplementary</option>
+              <option value="Regular / Part B">Regular / Part B</option>
+              <option value="Registrar Board">Registrar Board</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="modalSequenceHint" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-600 leading-relaxed">
+          <!-- Dynamic court sequence hint -->
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Case Title / Tag Note (Optional)</label>
+          <input type="text" id="modalCaseNote" placeholder="e.g. SLP (Crl) 4821/2026 • State vs. Sharma"
+            class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeTrackModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-[#0F172A] hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-xs transition">Pin to Distance Ticker</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION STACK -->
+  <div id="toastStack" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <script>
+    // =========================================================================
+    // 1. MULTI-DAY DATE STRIP CONFIGURATION
+    // =========================================================================
+    const DATES_STRIP = [
+      { id: '2026-11-23', dayName: 'Mon', label: '23 Nov', fullTitle: 'Monday, 23 Nov 2026', syncText: 'Fetched till 23.11.2026, 4:15 PM IST (Archived)', tag: 'Archived' },
+      { id: '2026-11-24', dayName: 'Tue', label: '24 Nov', fullTitle: 'Tuesday, 24 Nov 2026', syncText: 'Fetched till 24.11.2026, 4:20 PM IST (Archived)', tag: 'Archived' },
+      { id: '2026-11-25', dayName: 'Wed', label: '25 Nov', fullTitle: 'Wednesday, 25 Nov 2026', syncText: 'Fetched till 25.11.2026, 12:01 PM IST', tag: 'Active' },
+      { id: '2026-11-26', dayName: 'Thu', label: '26 Nov', fullTitle: 'Thursday, 26 Nov 2026', syncText: 'Advance Cause List • Fetched 25.11.2026, 12:01 PM IST', tag: 'Advance' },
+      { id: '2026-11-27', dayName: 'Fri', label: '27 Nov', fullTitle: 'Friday, 27 Nov 2026', syncText: 'Misc Day Cause List • Fetched 25.11.2026, 12:01 PM IST', tag: 'Misc Day' }
+    ];
+
+    // Helper to build standard number sequences cleanly
+    function range(start, end) {
+      const arr = [];
+      for (let i = start; i <= end; i++) arr.push(i);
+      return arr;
+    }
+
+    // =========================================================================
+    // 2. COMPLETE 21-COURT ROSTER (COURTS 1–19 + REGISTRAR COURTS 1 & 2)
+    // =========================================================================
+    const BASE_COURTS_21 = [
+      {
+        courtId: '1',
+        shortPill: '1',
+        courtLabel: "Court 1 • Chief Justice's Court",
+        category: 'regular',
+        statusMode: 'RUNNING', // RUNNING | ASSEMBLED_3PM | LUNCH_RECESS
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble The Chief Justice (Justice Surya Kant)",
+          "Hon'ble Mr. Justice Joymalya Bagchi",
+          "Hon'ble Mr. Justice Vipul Manubhai Pancholi"
+        ],
+        alertNotice: {
+          type: 'sequence',
+          text: "3-Judge Bench • Custom Sequence: Mentionings → Pronouncements → Items 1–15 → Tagged Item #24 heard with Item #9"
+        },
+        breakdown: {
+          mentionings: "2 Listed",
+          pronouncements: "1 Listed",
+          misc: "Part A: 1–15 | Part B: 16–28",
+          supplementary: "Items 101–106"
+        },
+        // Item 24 removed from serial spot because it is heard WITH Item 9
+        queueOrder: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+          16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28,
+          101, 102, 103, 104, 105, 106
+        ],
+        currentIndex: 5, // Running Item #6
+        alongWith: { 24: 9 },
+        fixedTime: {},
+        priorityItems: [9, 24]
+      },
+      {
+        courtId: '2',
+        shortPill: '2',
+        courtLabel: "Court 2",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Vikram Nath",
+          "Hon'ble Mr. Justice Sandeep Mehta"
+        ],
+        alertNotice: {
+          type: 'warning',
+          text: "Priority Bail Sequence: Bail items (#7, #12, #19) taken up first before regular fresh matters"
+        },
+        breakdown: {
+          mentionings: "Item 1",
+          pronouncements: "None",
+          misc: "Part A: 2–20 | Part B: 21–32",
+          supplementary: "Items 101–108"
+        },
+        // Priority bail items #7, #12, #19 jump right after Item #1
+        queueOrder: [
+          1, 7, 12, 19,
+          2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 20,
+          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+          101, 102, 103, 104, 105, 106, 107, 108
+        ],
+        currentIndex: 0, // Running Item #1 -> Item #7 is NEXT UP (1 matter ahead)!
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: [7, 12, 19]
+      },
+      {
+        courtId: '3',
+        shortPill: '3',
+        courtLabel: "Court 3",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mrs. Justice B.V. Nagarathna",
+          "Hon'ble Mr. Justice Satish Chandra Sharma"
+        ],
+        alertNotice: {
+          type: 'warning',
+          text: "Special Notice: Justice S.C. Sharma farewell week; part-heard matters fixed at 2:00 PM"
+        },
+        breakdown: {
+          mentionings: "2 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–18 | Part B: 19–30",
+          supplementary: "Items 101–105"
+        },
+        queueOrder: [...range(1, 30), ...range(101, 105)],
+        currentIndex: 8, // Running Item #9
+        alongWith: {},
+        fixedTime: { 25: '2:00 PM' },
+        priorityItems: [25]
+      },
+      {
+        courtId: '4',
+        shortPill: '4',
+        courtLabel: "Court 4",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice M.M. Sundresh",
+          "Hon'ble Mr. Justice Aravind Kumar"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "1 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–22 | Part B: 23–35",
+          supplementary: "Items 101–107"
+        },
+        queueOrder: [...range(1, 35), ...range(101, 107)],
+        currentIndex: 11, // Running Item #12
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '5',
+        shortPill: '5',
+        courtLabel: "Court 5",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Pamidighantam Sri Narasimha",
+          "Hon'ble Mr. Justice Manoj Misra"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "None",
+          pronouncements: "1 Listed",
+          misc: "Part A: 1–20 | Part B: 21–34",
+          supplementary: "Items 101–106"
+        },
+        queueOrder: [...range(1, 34), ...range(101, 106)],
+        currentIndex: 9, // Running Item #10
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: [1]
+      },
+      {
+        courtId: '6',
+        shortPill: '6',
+        courtLabel: "Court 6",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice J.B. Pardiwala",
+          "Hon'ble Mr. Justice R. Mahadevan"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "3 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–24 | Part B: 25–38",
+          supplementary: "Items 101–109"
+        },
+        queueOrder: [...range(1, 38), ...range(101, 109)],
+        currentIndex: 13, // Running Item #14
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '7',
+        shortPill: '7',
+        courtLabel: "Court 7",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Dipankar Datta",
+          "Hon'ble Mr. Justice Prashant Kumar Mishra"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "1 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–19 | Part B: 20–32",
+          supplementary: "Items 101–104"
+        },
+        queueOrder: [...range(1, 32), ...range(101, 104)],
+        currentIndex: 7, // Running Item #8
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '8',
+        shortPill: '8',
+        courtLabel: "Court 8",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Sanjay Kumar",
+          "Hon'ble Mr. Justice K.V. Viswanathan"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "None",
+          pronouncements: "2 Listed",
+          misc: "Part A: 1–21 | Part B: 22–33",
+          supplementary: "Items 101–105"
+        },
+        queueOrder: [...range(1, 33), ...range(101, 105)],
+        currentIndex: 10, // Running Item #11
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: [1, 2]
+      },
+      {
+        courtId: '9',
+        shortPill: '9',
+        courtLabel: "Court 9",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Ahsanuddin Amanullah",
+          "Hon'ble Mr. Justice Ujjal Bhuyan"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "2 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–23 | Part B: 24–36",
+          supplementary: "Items 101–108"
+        },
+        queueOrder: [...range(1, 36), ...range(101, 108)],
+        currentIndex: 14, // Running Item #15
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '10',
+        shortPill: '10',
+        courtLabel: "Court 10",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Sarasa Venkatanarayana Bhatti",
+          "Hon'ble Mr. Justice Augustine George Masih"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "1 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–20 | Part B: 21–30",
+          supplementary: "Items 101–104"
+        },
+        queueOrder: [...range(1, 30), ...range(101, 104)],
+        currentIndex: 6, // Running Item #7
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '11',
+        shortPill: '11',
+        courtLabel: "Court 11",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Prasanna Bhalachandra Varale",
+          "Hon'ble Mr. Justice N. Kotiswar Singh"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "None",
+          pronouncements: "None",
+          misc: "Part A: 1–22 | Part B: 23–34",
+          supplementary: "Items 101–106"
+        },
+        queueOrder: [...range(1, 34), ...range(101, 106)],
+        currentIndex: 12, // Running Item #13
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '12',
+        shortPill: '12',
+        courtLabel: "Court 12",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Manmohan",
+          "Hon'ble Mr. Justice N.V. Anjaria"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "2 Listed",
+          pronouncements: "1 Listed",
+          misc: "Part A: 1–21 | Part B: 22–32",
+          supplementary: "Items 101–105"
+        },
+        queueOrder: [...range(1, 32), ...range(101, 105)],
+        currentIndex: 8, // Running Item #9
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: [1]
+      },
+      {
+        courtId: '13',
+        shortPill: '13',
+        courtLabel: "Court 13",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice K. Vinod Chandran",
+          "Hon'ble Mr. Justice Vijay Bishnoi"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "1 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–24 | Part B: 25–35",
+          supplementary: "Items 101–107"
+        },
+        queueOrder: [...range(1, 35), ...range(101, 107)],
+        currentIndex: 15, // Running Item #16
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '14',
+        shortPill: '14',
+        courtLabel: "Court 14",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Atul Sharachchandra Chandurkar",
+          "Hon'ble Mr. Justice Alok Aradhe"
+        ],
+        alertNotice: {
+          type: 'warning',
+          text: "Time-Anchored Hearing: Item #31 fixed at 2:00 PM sharp after lunch recess"
+        },
+        breakdown: {
+          mentionings: "1 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–22 | Part B: 23–36",
+          supplementary: "Items 101–105"
+        },
+        queueOrder: [
+          ...range(1, 22),
+          ...range(101, 105),
+          31,
+          ...range(23, 30),
+          ...range(32, 36)
+        ],
+        currentIndex: 11, // Running Item #12
+        alongWith: {},
+        fixedTime: { 31: '2:00 PM' },
+        priorityItems: [31]
+      },
+      {
+        courtId: '15',
+        shortPill: '15',
+        courtLabel: "Court 15",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Sheel Nagu",
+          "Hon'ble Mr. Justice Shree Chandrashekhar"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "None",
+          pronouncements: "None",
+          misc: "Part A: 1–20 | Part B: 21–31",
+          supplementary: "Items 101–104"
+        },
+        queueOrder: [...range(1, 31), ...range(101, 104)],
+        currentIndex: 9, // Running Item #10
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '16',
+        shortPill: '16',
+        courtLabel: "Court 16",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mr. Justice Sanjeev Sachdeva",
+          "Hon'ble Mr. Justice Arun Palli"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "2 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–23 | Part B: 24–34",
+          supplementary: "Items 101–106"
+        },
+        queueOrder: [...range(1, 34), ...range(101, 106)],
+        currentIndex: 12, // Running Item #13
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '17',
+        shortPill: '17',
+        courtLabel: "Court 17",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 4.5,
+        bench: [
+          "Hon'ble Mrs. Justice Sunita Agarwal",
+          "Hon'ble Mr. Justice Devendra Kumar Upadhyaya"
+        ],
+        alertNotice: null,
+        breakdown: {
+          mentionings: "1 Listed",
+          pronouncements: "1 Listed",
+          misc: "Part A: 1–19 | Part B: 20–30",
+          supplementary: "Items 101–104"
+        },
+        queueOrder: [...range(1, 30), ...range(101, 104)],
+        currentIndex: 7, // Running Item #8
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: [1]
+      },
+      {
+        courtId: '18',
+        shortPill: '18',
+        courtLabel: "Court 18 • Single Judge Bench",
+        category: 'regular',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 3.5,
+        bench: [
+          "Hon'ble Mr. Justice Aparesh Kumar Singh"
+        ],
+        alertNotice: {
+          type: 'info',
+          text: "Single Judge Bench — Transfer Petitions & Bail Applications (Fast-track Misc Board)"
+        },
+        breakdown: {
+          mentionings: "3 Listed",
+          pronouncements: "None",
+          misc: "Part A: 1–35 | Part B: 36–48",
+          supplementary: "Items 101–110"
+        },
+        queueOrder: [...range(1, 48), ...range(101, 110)],
+        currentIndex: 18, // Running Item #19
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: '19',
+        shortPill: '19',
+        courtLabel: "Court 19 • Special Bench / Chamber",
+        category: 'regular',
+        statusMode: 'ASSEMBLED_3PM',
+        avgMinsPerItem: 5.0,
+        bench: [
+          "Hon'ble Mr. Justice Vikram Nath",
+          "Hon'ble Mr. Justice K.V. Viswanathan"
+        ],
+        alertNotice: {
+          type: 'warning',
+          text: "Special Bench / Chamber Matters assembling at 3:00 PM after regular boards rise"
+        },
+        breakdown: {
+          mentionings: "None",
+          pronouncements: "None",
+          misc: "Special List: Items 1–14",
+          supplementary: "Chamber: Items 51–58"
+        },
+        queueOrder: [...range(1, 14), ...range(51, 58)],
+        currentIndex: 0, // Assembles at 3:00 PM starting Item #1
+        alongWith: {},
+        fixedTime: { 1: '3:00 PM' },
+        priorityItems: [1]
+      },
+      {
+        courtId: 'R-1',
+        shortPill: 'R1',
+        courtLabel: "Registrar Court 1 (R-1)",
+        category: 'registrar',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 2.0,
+        bench: [
+          "Ld. Registrar (Judicial-I)"
+        ],
+        alertNotice: {
+          type: 'info',
+          text: "Registrar Board (Items 1–85): Service/Pleadings completion • Fast 2-min avg pace per item"
+        },
+        breakdown: {
+          mentionings: "N/A",
+          pronouncements: "N/A",
+          misc: "Service List: Items 1–85",
+          supplementary: "Supp: Items 86–94"
+        },
+        queueOrder: range(1, 94),
+        currentIndex: 33, // Running Item #34 -> Item #42 is 8 matters ahead!
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      },
+      {
+        courtId: 'R-2',
+        shortPill: 'R2',
+        courtLabel: "Registrar Court 2 (R-2)",
+        category: 'registrar',
+        statusMode: 'RUNNING',
+        avgMinsPerItem: 2.0,
+        bench: [
+          "Ld. Registrar (Judicial-II)"
+        ],
+        alertNotice: {
+          type: 'info',
+          text: "Registrar Board (Items 1–78): Defects, Counter-Affidavits & FDR Renewals • Fast 2-min avg pace per item"
+        },
+        breakdown: {
+          mentionings: "N/A",
+          pronouncements: "N/A",
+          misc: "Defects & FDR: Items 1–78",
+          supplementary: "Supp: Items 79–85"
+        },
+        queueOrder: range(1, 85),
+        currentIndex: 28, // Running Item #29
+        alongWith: {},
+        fixedTime: {},
+        priorityItems: []
+      }
+    ];
+
+    // =========================================================================
+    // 3. MUTABLE APPLICATION STATE
+    // =========================================================================
+    let selectedDateId = '2026-11-25';
+    let selectedCategory = 'all'; // 'all' | 'regular' | 'registrar' | 'alerts'
+    let courtsState = JSON.parse(JSON.stringify(BASE_COURTS_21));
+    let lunchBreakBuffer = false;
+    let autoTickTimer = null;
+
+    // Pre-populated 4 realistic tracked matters across Regular & Registrar courts
+    let trackedMatters = [
+      {
+        id: 'track-1',
+        courtId: '2',
+        itemNo: 7,
+        listType: 'Priority Bail',
+        note: 'SLP (Crl) 4821/2026 • Priority Bail Sequence'
+      },
+      {
+        id: 'track-2',
+        courtId: '1',
+        itemNo: 24,
+        listType: 'Fresh / Misc',
+        note: 'W.P. (C) 912/2026 • Tagged Along With #9'
+      },
+      {
+        id: 'track-3',
+        courtId: '14',
+        itemNo: 31,
+        listType: 'Fixed Time',
+        note: 'C.A. 1104/2026 • 2:00 PM Fixed-Time Hearing'
+      },
+      {
+        id: 'track-4',
+        courtId: 'R-1',
+        itemNo: 42,
+        listType: 'Registrar Board',
+        note: 'SLP (C) 19840/2025 • Completion of Pleadings'
+      }
+    ];
+
+    // =========================================================================
+    // 4. DISTANCE & QUEUE CALCULATION ENGINE
+    // =========================================================================
+    function formatCourtDisplay(courtId) {
+      if (courtId === 'R-1') return 'Registrar Court 1';
+      if (courtId === 'R-2') return 'Registrar Court 2';
+      return `Court ${courtId}`;
+    }
+
+    function calculateMatterDistance(matter) {
+      const court = courtsState.find(c => c.courtId === matter.courtId);
+      if (!court) return null;
+
+      const currentItem = court.queueOrder[court.currentIndex] ?? court.queueOrder[court.queueOrder.length - 1];
+      const leadItem = court.alongWith[matter.itemNo] || null;
+      const effectiveItem = leadItem || Number(matter.itemNo);
+      const fixedTimeStr = court.fixedTime[effectiveItem] || null;
+
+      const targetIndex = court.queueOrder.indexOf(effectiveItem);
+      const currentIndex = court.currentIndex;
+      const avgMins = court.avgMinsPerItem || 4.5;
+
+      // Fallback if user tracked an unlisted item number
+      if (targetIndex === -1) {
+        const ahead = Math.max(0, effectiveItem - currentItem);
+        const mins = Math.round(ahead * avgMins + (lunchBreakBuffer && ahead > 0 ? 60 : 0));
+        return {
+          court,
+          currentItem,
+          effectiveItem,
+          leadItem,
+          fixedTimeStr,
+          mattersAhead: ahead,
+          estMins: mins,
+          badgeState: ahead === 0 ? 'ON BOARD NOW' : (ahead <= 3 ? 'NEXT UP' : 'QUEUED'),
+          progressPct: ahead === 0 ? 100 : Math.min(92, Math.max(8, Math.round((currentItem / Math.max(effectiveItem, 1)) * 100))),
+          intermediateItems: []
+        };
+      }
+
+      const diff = targetIndex - currentIndex;
+
+      if (diff < 0) {
+        return {
+          court,
+          currentItem,
+          effectiveItem,
+          leadItem,
+          fixedTimeStr,
+          mattersAhead: 0,
+          estMins: 0,
+          badgeState: 'PASSED',
+          progressPct: 100,
+          intermediateItems: []
+        };
+      }
+
+      if (diff === 0 && court.statusMode !== 'ASSEMBLED_3PM') {
+        return {
+          court,
+          currentItem,
+          effectiveItem,
+          leadItem,
+          fixedTimeStr,
+          mattersAhead: 0,
+          estMins: 0,
+          badgeState: 'ON BOARD NOW',
+          progressPct: 100,
+          intermediateItems: []
+        };
+      }
+
+      const intermediateItems = [];
+      for (let i = currentIndex + 1; i < targetIndex; i++) {
+        intermediateItems.push(court.queueOrder[i]);
+      }
+
+      let estMins = Math.round(diff * avgMins);
+      if (court.statusMode === 'ASSEMBLED_3PM') {
+        // 12:01 PM to 3:00 PM is 179 mins + queue offset
+        estMins = 179 + Math.round(diff * avgMins);
+      } else if (lunchBreakBuffer) {
+        estMins += 60;
+      }
+
+      const badgeState = diff === 0 ? 'QUEUED' : (diff <= 3 ? 'NEXT UP' : 'QUEUED');
+      const progressPct = Math.min(95, Math.max(6, Math.round(((currentIndex + 1) / (targetIndex + 1)) * 100)));
+
+      return {
+        court,
+        currentItem,
+        effectiveItem,
+        leadItem,
+        fixedTimeStr,
+        mattersAhead: diff,
+        estMins,
+        badgeState,
+        progressPct,
+        intermediateItems
+      };
+    }
+
+    function formatWaitTime(mins) {
+      if (mins <= 0) return '0 min';
+      if (mins < 60) return `~${mins} min`;
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      return m > 0 ? `~${h}h ${m}m` : `~${h} hr`;
+    }
+
+    function formatProjectedClock(mins, fixedTimeStr) {
+      if (fixedTimeStr) return `${fixedTimeStr} (Fixed)`;
+      // Base time: 12:01 PM IST
+      const baseTotal = 12 * 60 + 1 + mins;
+      const h24 = Math.floor(baseTotal / 60) % 24;
+      const m = baseTotal % 60;
+      const suffix = h24 >= 12 ? 'PM' : 'AM';
+      const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+      return `${h12}:${String(m).padStart(2, '0')} ${suffix}`;
+    }
+
+    // =========================================================================
+    // 5. RENDER FUNCTIONS
+    // =========================================================================
+    function renderDateStrip() {
+      const container = document.getElementById('dateStripContainer');
+      container.innerHTML = DATES_STRIP.map(d => {
+        const active = d.id === selectedDateId;
+        return `
+          <button onclick="switchDate('${d.id}')"
+            class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 shrink-0 ${
+              active
+                ? 'bg-[#0F172A] text-white border-[#0F172A] shadow-2xs'
+                : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+            }">
+            <span class="${active ? 'text-slate-300' : 'text-slate-400'}">${d.dayName}</span>
+            <span>${d.label}</span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${
+              active
+                ? 'bg-emerald-500 text-slate-950'
+                : 'bg-slate-100 text-slate-600'
+            }">${d.tag}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderCategoryTabsAndJumpPills() {
+      const alertsCount = courtsState.filter(c => c.alertNotice !== null).length;
+      const tabs = [
+        { id: 'all', label: 'All Courts (21)' },
+        { id: 'regular', label: 'Regular Courts (1–19)' },
+        { id: 'registrar', label: 'Registrar Courts (R-1 & R-2)' },
+        { id: 'alerts', label: `With Alerts / Special Benches (${alertsCount})` }
+      ];
+
+      document.getElementById('categoryTabsContainer').innerHTML = tabs.map(t => {
+        const active = t.id === selectedCategory;
+        return `
+          <button onclick="selectCategory('${t.id}')"
+            class="px-2.5 py-1 rounded-lg text-xs font-semibold border transition shrink-0 ${
+              active
+                ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xs'
+                : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+            }">
+            ${t.label}
+          </button>
+        `;
+      }).join('');
+
+      document.getElementById('quickJumpPills').innerHTML = courtsState.map(c => {
+        const isLive = c.statusMode === 'RUNNING';
+        const dotColor = isLive ? 'bg-emerald-500' : (c.statusMode === 'ASSEMBLED_3PM' ? 'bg-amber-400' : 'bg-slate-400');
+        return `
+          <button onclick="scrollToCourt('${c.courtId}')"
+            title="Jump to ${c.courtLabel}"
+            class="px-2 py-0.5 rounded-md bg-white hover:bg-slate-900 hover:text-white border border-slate-200 text-[11px] font-mono font-bold text-slate-700 inline-flex items-center gap-1 transition shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+            <span>${c.shortPill}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function populateCourtDropdowns() {
+      const optionsHtml = courtsState.map(c =>
+        `<option value="${c.courtId}">${c.courtLabel} (${c.bench[0].replace("Hon'ble ", "")})</option>`
+      ).join('');
+
+      const simSel = document.getElementById('simCourtSelect');
+      const prevSim = simSel.value || '2';
+      simSel.innerHTML = optionsHtml;
+      simSel.value = prevSim;
+
+      const modalSel = document.getElementById('modalCourtSelect');
+      const prevModal = modalSel.value || '1';
+      modalSel.innerHTML = optionsHtml;
+      modalSel.value = prevModal;
+    }
+
+    function renderPinnedTicker() {
+      const grid = document.getElementById('pinnedTickerGrid');
+      const badge = document.getElementById('pinnedBadgeCount');
+      badge.textContent = `${trackedMatters.length} Tracked`;
+
+      if (trackedMatters.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-7 px-4 text-center bg-white rounded-xl border border-dashed border-slate-300">
+            <p class="text-sm font-bold text-slate-700">No matters pinned on the Live Matter Distance Ticker</p>
+            <p class="text-xs text-slate-500 mt-1">Click any item chip in the 21 courtroom cards below or press "+ Track Matter" to monitor live queue distance.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = trackedMatters.map(m => {
+        const dist = calculateMatterDistance(m);
+        if (!dist) return '';
+
+        let cardCls = 'border-slate-200 bg-white';
+        let barCls = 'bg-indigo-600';
+        let badgeHtml = '';
+
+        if (dist.badgeState === 'ON BOARD NOW') {
+          cardCls = 'border-red-500 ring-2 ring-red-500/20 urgent-card bg-red-50/30';
+          barCls = 'bg-red-500';
+          badgeHtml = `
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-600 text-white font-extrabold text-[11px] tracking-wide">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+              ON BOARD NOW
+            </span>`;
+        } else if (dist.badgeState === 'NEXT UP') {
+          cardCls = 'border-amber-400 ring-2 ring-amber-400/20 bg-amber-50/30';
+          barCls = 'bg-amber-500';
+          badgeHtml = `
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500 text-slate-950 font-extrabold text-[11px] tracking-wide">
+              NEXT UP (${dist.mattersAhead} ahead)
+            </span>`;
+        } else if (dist.badgeState === 'PASSED') {
+          cardCls = 'border-slate-300 bg-slate-100/80';
+          barCls = 'bg-slate-400';
+          badgeHtml = `
+            <span class="px-2 py-0.5 rounded-md bg-slate-200 text-slate-700 font-bold text-[11px]">
+              PASSED / HEARD
+            </span>`;
+        } else {
+          badgeHtml = `
+            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-200 font-bold text-[11px] tabular-nums">
+              QUEUED • ${dist.mattersAhead} ahead
+            </span>`;
+        }
+
+        const midPreview = dist.intermediateItems.slice(0, 3);
+        const midRemainder = Math.max(0, dist.intermediateItems.length - midPreview.length);
+
+        return `
+          <div class="rounded-xl border ${cardCls} p-3.5 shadow-2xs flex flex-col justify-between gap-2.5 transition">
+            <!-- Top Row: Court + Item + Remove Button -->
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded-md bg-[#0F172A] text-white text-[11px] font-bold">
+                    ${formatCourtDisplay(m.courtId)}
+                  </span>
+                  <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-800 border border-indigo-200 font-mono font-bold text-xs tabular-nums">
+                    Item #${m.itemNo}
+                  </span>
+                </div>
+                <p class="text-xs font-bold text-slate-900 mt-1.5 line-clamp-1">
+                  ${m.note || `${formatCourtDisplay(m.courtId)} • Item #${m.itemNo}`}
+                </p>
+              </div>
+
+              <button onclick="removeTrackedMatter('${m.id}')" title="Remove from Ticker"
+                class="w-6 h-6 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center font-bold text-sm transition shrink-0">
+                ×
+              </button>
+            </div>
+
+            <!-- Status Badge & Wait / Call Time -->
+            <div class="flex items-center justify-between gap-2 pt-0.5">
+              <div>${badgeHtml}</div>
+              <div class="text-right tabular-nums">
+                <div class="text-xs font-extrabold text-slate-900">
+                  ${dist.badgeState === 'ON BOARD NOW' ? 'Calling Now' : formatWaitTime(dist.estMins)}
+                </div>
+                <div class="text-[10px] font-semibold text-slate-500">
+                  Est. ${formatProjectedClock(dist.estMins, dist.fixedTimeStr)}
+                </div>
+              </div>
+            </div>
+
+            <!-- Special Rule Chips (Along With / Priority Bail / Fixed Time) -->
+            ${(dist.leadItem || dist.fixedTimeStr || m.courtId === '2') ? `
+              <div class="flex flex-wrap items-center gap-1">
+                ${dist.leadItem ? `
+                  <span class="px-1.5 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-semibold">
+                    Tagged w/ #${dist.leadItem} (Snapped to #${dist.leadItem})
+                  </span>
+                ` : ''}
+                ${dist.fixedTimeStr ? `
+                  <span class="px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-semibold">
+                    Fixed at ${dist.fixedTimeStr}
+                  </span>
+                ` : ''}
+                ${m.courtId === '2' ? `
+                  <span class="px-1.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200 text-[10px] font-semibold">
+                    Priority Bail Order
+                  </span>
+                ` : ''}
+              </div>
+            ` : ''}
+
+            <!-- Visual Queue Pipeline -->
+            <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200/80 space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-semibold text-slate-700 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Running: <strong class="font-mono text-slate-900 tabular-nums">#${dist.currentItem}</strong>
+                </span>
+                <span class="font-mono font-bold text-slate-600 tabular-nums">${dist.progressPct}%</span>
+              </div>
+
+              <!-- Animated Progress Bar -->
+              <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                <div class="h-full ${barCls} rounded-full transition-all duration-300" style="width: ${dist.progressPct}%"></div>
+              </div>
+
+              <!-- Queue Nodes: Now Running -> Intermediate Items -> Your Item -->
+              <div class="flex items-center gap-1 text-[10px] font-mono overflow-x-auto no-scrollbar pt-0.5 tabular-nums">
+                <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold shrink-0">
+                  #${dist.currentItem}
+                </span>
+                ${midPreview.map(num => `
+                  <span class="text-slate-400">→</span>
+                  <span class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 shrink-0">#${num}</span>
+                `).join('')}
+                ${midRemainder > 0 ? `
+                  <span class="text-slate-400">→</span>
+                  <span class="px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-600 shrink-0">+${midRemainder}</span>
+                ` : ''}
+                ${dist.mattersAhead > 0 ? `
+                  <span class="text-slate-400">→</span>
+                  <span class="px-1.5 py-0.5 rounded bg-[#0F172A] text-white font-bold shrink-0">
+                    #${dist.effectiveItem} (You)
+                  </span>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- Footer Link -->
+            <div class="flex items-center justify-between text-[11px] pt-0.5">
+              <button onclick="scrollToCourt('${m.courtId}')" class="text-indigo-600 hover:text-indigo-800 font-semibold inline-flex items-center gap-1">
+                <span>View ${formatCourtDisplay(m.courtId)} Board</span>
+                <span>↓</span>
+              </button>
+              <span class="text-slate-400 font-mono text-[10px]">${courtAvgLabel(dist.court)}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function courtAvgLabel(court) {
+      return `~${court.avgMinsPerItem}m/item`;
+    }
+
+    function renderCourtroomCards() {
+      const container = document.getElementById('courtroomCardsGrid');
+      const query = document.getElementById('boardSearchInput').value.trim().toLowerCase();
+
+      const filtered = courtsState.filter(court => {
+        if (selectedCategory === 'regular' && court.category !== 'regular') return false;
+        if (selectedCategory === 'registrar' && court.category !== 'registrar') return false;
+        if (selectedCategory === 'alerts' && !court.alertNotice) return false;
+
+        if (!query) return true;
+        const cleanQuery = query.replace('#', '');
+        const matchCourt =
+          court.courtLabel.toLowerCase().includes(query) ||
+          court.courtId.toLowerCase() === cleanQuery ||
+          `court ${court.courtId.toLowerCase()}`.includes(query);
+        const matchJudge = court.bench.some(j => j.toLowerCase().includes(query));
+        const matchItem = court.queueOrder.some(n => String(n) === cleanQuery) ||
+          Object.keys(court.alongWith).some(k => k === cleanQuery);
+        const matchNotice = court.alertNotice && court.alertNotice.text.toLowerCase().includes(query);
+        return matchCourt || matchJudge || matchItem || matchNotice;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-8 text-center">
+            <p class="text-sm font-bold text-slate-800">No courtrooms match your current filter or search</p>
+            <button onclick="resetFilters()" class="mt-2.5 px-3.5 py-1.5 bg-[#0F172A] text-white text-xs font-semibold rounded-xl">
+              Show All 21 Courts
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(court => {
+        const runningItem = court.queueOrder[court.currentIndex];
+        const pinnedItemsInCourt = trackedMatters
+          .filter(m => m.courtId === court.courtId)
+          .map(m => Number(m.itemNo));
+
+        // Live Board Status Badge
+        let statusBadgeHtml = '';
+        if (court.statusMode === 'ASSEMBLED_3PM') {
+          statusBadgeHtml = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 font-mono font-extrabold text-xs">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              ASSEMBLED AT 3:00 PM
+            </span>`;
+        } else if (court.statusMode === 'LUNCH_RECESS') {
+          statusBadgeHtml = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 font-mono font-extrabold text-xs">
+              <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+              LUNCH RECESS
+            </span>`;
+        } else {
+          statusBadgeHtml = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-mono font-extrabold text-xs tabular-nums">
+              <span class="relative flex h-2 w-2 live-beacon">
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              RUNNING: ITEM #${runningItem}
+            </span>`;
+        }
+
+        // Alert / Sequence Banner
+        let alertBannerHtml = '';
+        if (court.alertNotice) {
+          const styleMap = {
+            warning: 'bg-amber-50 border-amber-200 text-amber-950',
+            sequence: 'bg-indigo-50 border-indigo-200 text-indigo-950',
+            info: 'bg-sky-50 border-sky-200 text-sky-950'
+          };
+          alertBannerHtml = `
+            <div class="px-3 py-2 rounded-xl border ${styleMap[court.alertNotice.type] || styleMap.info} text-xs font-semibold flex items-start gap-2">
+              <span class="mt-0.5 shrink-0">⚡</span>
+              <span>${court.alertNotice.text}</span>
+            </div>
+          `;
+        }
+
+        // Interactive item chips (first 24 items in true sequence, plus registrar window around running item)
+        let chipsSlice = [];
+        if (court.category === 'registrar') {
+          const startIdx = Math.max(0, court.currentIndex - 4);
+          chipsSlice = court.queueOrder.slice(startIdx, startIdx + 24);
+        } else {
+          chipsSlice = court.queueOrder.slice(0, 24);
+        }
+
+        return `
+          <article id="court-card-${court.courtId}" class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col justify-between">
+            <div>
+              <!-- Card Header -->
+              <div class="px-4 py-3.5 border-b border-slate-100 flex flex-wrap items-start justify-between gap-2">
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="px-2 py-0.5 rounded-lg ${court.category === 'registrar' ? 'bg-indigo-950' : 'bg-[#0F172A]'} text-white font-mono font-extrabold text-xs">
+                      ${court.shortPill}
+                    </span>
+                    <h3 class="text-sm sm:text-base font-extrabold text-slate-900 truncate">${court.courtLabel}</h3>
+                  </div>
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                    ${court.bench.join(' • ')}
+                  </p>
+                </div>
+
+                <!-- Status Badge & Quick +Track Button -->
+                <div class="flex items-center gap-1.5 shrink-0">
+                  ${statusBadgeHtml}
+                  <button onclick="openTrackModalForCourt('${court.courtId}')"
+                    class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition">
+                    + Track
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card Body -->
+              <div class="p-4 space-y-3">
+                ${alertBannerHtml}
+
+                <!-- Board Breakdown Counts -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+                  <div class="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200/70">
+                    <span class="text-slate-400 block">Mentionings</span>
+                    <span class="font-bold text-slate-900">${court.breakdown.mentionings}</span>
+                  </div>
+                  <div class="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200/70">
+                    <span class="text-slate-400 block">Pronouncements</span>
+                    <span class="font-bold text-slate-900">${court.breakdown.pronouncements}</span>
+                  </div>
+                  <div class="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200/70">
+                    <span class="text-slate-400 block">Misc Part A/B</span>
+                    <span class="font-bold text-slate-900">${court.breakdown.misc}</span>
+                  </div>
+                  <div class="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200/70">
+                    <span class="text-slate-400 block">Supplementary</span>
+                    <span class="font-bold text-slate-900">${court.breakdown.supplementary}</span>
+                  </div>
+                </div>
+
+                <!-- Interactive Item Chips -->
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                      Board Items (Click chip to pin/unpin)
+                    </span>
+                    <div class="flex items-center gap-2">
+                      <span class="text-[11px] font-mono text-slate-400">${court.queueOrder.length} items</span>
+                      <button onclick="advanceSpecificCourt('${court.courtId}', 1)"
+                        class="px-2 py-0.5 rounded bg-slate-100 hover:bg-emerald-100 hover:text-emerald-900 text-slate-600 font-mono text-[10px] font-bold border border-slate-200 transition">
+                        Next +1
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-1.5">
+                    ${chipsSlice.map(itemNum => {
+                      const seqPos = court.queueOrder.indexOf(itemNum);
+                      const isHeard = court.statusMode === 'RUNNING' && seqPos < court.currentIndex;
+                      const isRunning = court.statusMode === 'RUNNING' && seqPos === court.currentIndex;
+                      const isPinned = pinnedItemsInCourt.includes(itemNum);
+                      const isPriority = court.priorityItems.includes(itemNum);
+
+                      let chipCls = '';
+                      if (isPinned) {
+                        chipCls = 'bg-indigo-600 text-white border-indigo-600 ring-2 ring-indigo-500/25 shadow-2xs';
+                      } else if (isRunning) {
+                        chipCls = 'bg-emerald-500 text-white border-emerald-500 font-extrabold shadow-2xs';
+                      } else if (isHeard) {
+                        chipCls = 'bg-slate-100 text-slate-400 border-slate-200 line-through';
+                      } else if (isPriority) {
+                        chipCls = 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100';
+                      } else {
+                        chipCls = 'bg-white text-slate-700 border-slate-200 hover:border-indigo-400 hover:text-indigo-700';
+                      }
+
+                      return `
+                        <button onclick="toggleItemChip('${court.courtId}', ${itemNum})"
+                          title="${isPinned ? 'Click to unpin from Distance Ticker' : 'Click to pin to Distance Ticker'}"
+                          class="px-2 py-1 rounded-lg font-mono text-xs font-semibold border transition tabular-nums ${chipCls}">
+                          #${itemNum}${isPinned ? ' ★' : ''}
+                        </button>
+                      `;
+                    }).join('')}
+
+                    <!-- Tagged Along-With Items (e.g., Item #24 w/ #9 in Court 1) -->
+                    ${Object.keys(court.alongWith).map(taggedStr => {
+                      const tNum = Number(taggedStr);
+                      const leadNum = court.alongWith[tNum];
+                      const isPinned = pinnedItemsInCourt.includes(tNum);
+                      return `
+                        <button onclick="toggleItemChip('${court.courtId}', ${tNum})"
+                          class="px-2 py-1 rounded-lg font-mono text-xs font-semibold border transition tabular-nums ${
+                            isPinned
+                              ? 'bg-indigo-600 text-white border-indigo-600 ring-2 ring-indigo-500/25'
+                              : 'bg-purple-50 text-purple-900 border-purple-300 hover:bg-purple-100'
+                          }">
+                          #${tNum} (w/ #${leadNum})${isPinned ? ' ★' : ''}
+                        </button>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderAll() {
+      renderDateStrip();
+      renderCategoryTabsAndJumpPills();
+      renderPinnedTicker();
+      renderCourtroomCards();
+    }
+
+    // =========================================================================
+    // 6. INTERACTIVE CONTROLS & EVENT HANDLERS
+    // =========================================================================
+    function switchDate(dateId) {
+      selectedDateId = dateId;
+      const meta = DATES_STRIP.find(d => d.id === dateId);
+      document.getElementById('liveSyncTimestamp').textContent = meta.syncText;
+      document.getElementById('boardSectionTitle').textContent = `Daily Cause List Boards • ${meta.fullTitle}`;
+
+      // Reset board progression to match selected day
+      courtsState = JSON.parse(JSON.stringify(BASE_COURTS_21));
+      if (dateId === '2026-11-23' || dateId === '2026-11-24') {
+        courtsState.forEach(c => {
+          c.currentIndex = c.queueOrder.length - 1;
+          c.statusMode = 'RUNNING';
+        });
+      } else if (dateId === '2026-11-26' || dateId === '2026-11-27') {
+        courtsState.forEach(c => {
+          c.currentIndex = 0;
+          if (c.courtId === '19') c.statusMode = 'ASSEMBLED_3PM';
+        });
+      }
+
+      renderAll();
+      showToast(`Switched cause list to ${meta.fullTitle}`);
+    }
+
+    function selectCategory(catId) {
+      selectedCategory = catId;
+      renderAll();
+    }
+
+    function handleSearchOrFilter() {
+      const q = document.getElementById('boardSearchInput').value;
+      document.getElementById('clearSearchBtn').classList.toggle('hidden', q.length === 0);
+      renderCourtroomCards();
+    }
+
+    function clearSearch() {
+      document.getElementById('boardSearchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      renderCourtroomCards();
+    }
+
+    function resetFilters() {
+      selectedCategory = 'all';
+      clearSearch();
+      renderAll();
+    }
+
+    function scrollToCourt(courtId) {
+      // Ensure card is visible in current filter
+      const targetCourt = courtsState.find(c => c.courtId === courtId);
+      if (targetCourt && selectedCategory !== 'all') {
+        selectedCategory = 'all';
+        renderAll();
+      }
+      setTimeout(() => {
+        const el = document.getElementById(`court-card-${courtId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-2', 'ring-indigo-500');
+          setTimeout(() => el.classList.remove('ring-2', 'ring-indigo-500'), 1400);
+        }
+      }, 40);
+    }
+
+    function stepCourtItem(delta) {
+      const courtId = document.getElementById('simCourtSelect').value;
+      advanceSpecificCourt(courtId, delta);
+    }
+
+    function advanceSpecificCourt(courtId, delta) {
+      const court = courtsState.find(c => c.courtId === courtId);
+      if (!court) return;
+
+      if (court.statusMode === 'ASSEMBLED_3PM' && delta > 0) {
+        court.statusMode = 'RUNNING';
+        renderAll();
+        showToast(`${formatCourtDisplay(courtId)} assembled → Now running Item #${court.queueOrder[court.currentIndex]}`);
+        return;
+      }
+
+      const nextIdx = court.currentIndex + delta;
+      if (nextIdx >= 0 && nextIdx < court.queueOrder.length) {
+        court.currentIndex = nextIdx;
+        renderAll();
+        showToast(`${formatCourtDisplay(courtId)} → Running Item #${court.queueOrder[court.currentIndex]}`);
+      } else {
+        showToast(`${formatCourtDisplay(courtId)} is at the boundary of its cause list`);
+      }
+    }
+
+    function toggleLunchBuffer(checked) {
+      lunchBreakBuffer = checked;
+      document.getElementById('lunchActiveNotice').classList.toggle('hidden', !checked);
+      courtsState.forEach(c => {
+        if (c.courtId !== '19') {
+          c.statusMode = checked ? 'LUNCH_RECESS' : 'RUNNING';
+        }
+      });
+      renderAll();
+      showToast(checked ? '1:00 PM Lunch Break Buffer (+60m) active' : 'Regular court session resumed');
+    }
+
+    function toggleAutoTick() {
+      const btn = document.getElementById('autoTickBtn');
+      const label = document.getElementById('autoTickLabel');
+      const dot = document.getElementById('autoTickDot');
+
+      if (autoTickTimer) {
+        clearInterval(autoTickTimer);
+        autoTickTimer = null;
+        label.textContent = 'Auto-Tick Simulation: OFF';
+        btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-600/30 border border-indigo-400/40 text-indigo-200 hover:bg-indigo-600/50 font-semibold transition';
+        dot.className = 'w-2 h-2 rounded-full bg-indigo-400';
+        showToast('Auto-Tick Simulation stopped');
+      } else {
+        label.textContent = 'Auto-Tick Simulation: ON';
+        btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-bold transition';
+        dot.className = 'w-2 h-2 rounded-full bg-slate-950 animate-ping';
+        autoTickTimer = setInterval(() => {
+          const activeCourts = courtsState.filter(c => c.statusMode === 'RUNNING' && c.currentIndex < c.queueOrder.length - 1);
+          if (activeCourts.length > 0) {
+            const pick = activeCourts[Math.floor(Math.random() * activeCourts.length)];
+            pick.currentIndex += 1;
+            renderAll();
+          }
+        }, 3500);
+        showToast('Auto-Tick Simulation active (advancing random courts every 3.5s)');
+      }
+    }
+
+    function toggleItemChip(courtId, itemNo) {
+      const idx = trackedMatters.findIndex(
+        m => m.courtId === courtId && Number(m.itemNo) === Number(itemNo)
+      );
+      if (idx !== -1) {
+        trackedMatters.splice(idx, 1);
+        renderAll();
+        showToast(`Removed ${formatCourtDisplay(courtId)} • Item #${itemNo}`);
+      } else {
+        trackedMatters.unshift({
+          id: 'track-' + Date.now(),
+          courtId,
+          itemNo: Number(itemNo),
+          listType: courtId.startsWith('R-') ? 'Registrar Board' : 'Cause List',
+          note: `${formatCourtDisplay(courtId)} • Item #${itemNo}`
+        });
+        renderAll();
+        showToast(`Pinned ${formatCourtDisplay(courtId)} • Item #${itemNo} to Live Ticker`);
+      }
+    }
+
+    function removeTrackedMatter(id) {
+      trackedMatters = trackedMatters.filter(m => m.id !== id);
+      renderAll();
+      showToast('Removed matter from Live Distance Ticker');
+    }
+
+    // Modal Handlers
+    function openTrackModal() {
+      const modal = document.getElementById('trackMatterModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      updateModalCourtHint();
+      document.getElementById('modalItemInput').focus();
+    }
+
+    function openTrackModalForCourt(courtId) {
+      document.getElementById('modalCourtSelect').value = courtId;
+      openTrackModal();
+    }
+
+    function closeTrackModal() {
+      const modal = document.getElementById('trackMatterModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function updateModalCourtHint() {
+      const courtId = document.getElementById('modalCourtSelect').value;
+      const court = courtsState.find(c => c.courtId === courtId);
+      if (!court) return;
+      const running = court.queueOrder[court.currentIndex];
+      document.getElementById('modalSequenceHint').innerHTML = `
+        <strong>${court.courtLabel}</strong> • Currently at <strong>Item #${running}</strong> (${court.avgMinsPerItem} min/item avg).
+        ${court.alertNotice ? `<br/><span class="text-indigo-700 font-medium">${court.alertNotice.text}</span>` : ''}
+      `;
+    }
+
+    function submitTrackMatter(e) {
+      e.preventDefault();
+      const courtId = document.getElementById('modalCourtSelect').value;
+      const itemNo = Number(document.getElementById('modalItemInput').value);
+      const listType = document.getElementById('modalListType').value;
+      const note = document.getElementById('modalCaseNote').value.trim();
+
+      if (!itemNo || itemNo < 1) return;
+
+      trackedMatters = trackedMatters.filter(m => !(m.courtId === courtId && Number(m.itemNo) === itemNo));
+      trackedMatters.unshift({
+        id: 'track-' + Date.now(),
+        courtId,
+        itemNo,
+        listType,
+        note: note || `${formatCourtDisplay(courtId)} • ${listType} #${itemNo}`
+      });
+
+      e.target.reset();
+      closeTrackModal();
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast(`Pinned ${formatCourtDisplay(courtId)} • Item #${itemNo} to Live Ticker`);
+    }
+
+    // =========================================================================
+    // 7. ONE-CLICK STANDALONE INDEX.HTML DOWNLOADER
+    // =========================================================================
+    function downloadStandaloneHTML() {
+      try {
+        const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'index.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Downloaded index.html — ready to drop into Netlify / Vercel / GitHub Pages');
+      } catch (err) {
+        showToast('Unable to trigger download in this sandbox');
+      }
+    }
+
+    function showToast(msg) {
+      const stack = document.getElementById('toastStack');
+      const el = document.createElement('div');
+      el.className = 'bg-[#0F172A] text-white text-xs font-semibold px-3.5 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2 transition-all duration-200';
+      el.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span><span>${msg}</span>`;
+      stack.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(6px)';
+        setTimeout(() => el.remove(), 220);
+      }, 2500);
+    }
+
+    // Boot App
+    window.addEventListener('DOMContentLoaded', () => {
+      populateCourtDropdowns();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
